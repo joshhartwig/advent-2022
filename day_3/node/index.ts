@@ -47,14 +47,16 @@ const assignValToChar = (str : string) : number => {
 const splitStringsGroups = (strs: string[], splitSize: number) : string[][] => {
   let container: string[][] = [] // create  a temp to hold our array of arrays
   let temp: string[] = []
-  let count = 1
-  result.forEach((s: string) => {
+  let count = 0
+  strs.forEach((s: string) => {
     temp.push(s)
-    if(count % splitSize === 0) {
-      count = 1
+    count++
+    if(count === splitSize) {
+      count = 0
       container.push(temp)
       temp = [] // clear array
     }
+    
   })
   return container
 }
@@ -83,27 +85,30 @@ const findCommonChars = (s1: string, s2: string, s3?: string) : string => {
 part one
 */
 
-let scores: number[] = []
+let roundOneScores: number[] = []
 // iterate through each of our strings in array result
 result.forEach((str: string) => {
   const [str1, str2] = splitString(str)
   const common = findCommonChars(str1,str2)
   const val = assignValToChar(common)
-  scores.push(val)
+  roundOneScores.push(val)
 })
 
-console.log(`part one answer: ${scores.reduce((prev,current) => prev + current)}`)
+console.log(`part one answer: ${roundOneScores.reduce((prev,current) => prev + current)}`)
 
 /*
 part two
 */
+let roundTwoScores: number[] = []
+let splits = splitStringsGroups(result,3)
+splits.forEach((arr) => {
+  let char = findCommonChars(arr[0],arr[1],arr[2])
+  const val = assignValToChar(char)
+  roundTwoScores.push(val)
+})
 
-let a = "vJrwpWtwJgWrhcsFMMfFFhFp"
-let b = "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL"
-let c = "PmmdzqPrVvPwwTWBwg"
+console.log(`part two answer: ${roundTwoScores.reduce((prev,current) => prev + current)}`)
 
-let r = findCommonChars(a,b)
-console.log(r)
 
 
 
