@@ -1,27 +1,51 @@
-// ingest the layout of the crates from data.txt
-//ingest the crate layout into a array of arrays with each element being represented
-/*
-    [D]    
-[N] [C]    
-[Z] [M] [P]
- 1   2   3 
-
-move 1 from 2 to 1
-move 3 from 1 to 3
-move 2 from 2 to 1
-move 1 from 1 to 2
-*/
-
 const fs = require('fs')
 const result = fs.readFileSync('data.txt','utf8').split('\n')
 
-//find the line that contains a 1
-//starting from one count upwards for every number ever 3 spaces until end
-// 9 is the highest number create 9 arrays
-// starting from 1st string
-// start one space c then 3 nothing then 3 nothing keep 
+interface instruction   {
+  count: number,
+  to: number,
+  from: number,
+}
 
-// finds the starting row for the column count
+// takes in a string and returns an instruction set
+const parseInstruction = (str: string) : { count: number, to: number, from: number } => {
+  let c = 0
+  let t = 0
+  let f = 0
+
+  if(str.length > 18) { // there is a larger number in the count
+    let temp = str.substring(5,7)
+    c = parseInt(temp)
+    t = parseInt(str[18])
+    f = parseInt(str[13])
+  } else {
+    c = parseInt(str[5])
+    t = parseInt(str[17])
+    f = parseInt(str[12])
+  }
+  
+  return {
+    count: c,
+    to: t,
+    from: f,
+  }
+}
+
+const executeInstructionPartOne = (arr: string[][], ins: { count: number, to: number, from: number }) : void => {
+
+  let arrayTo = arr[ins.to - 1]
+  let arrayFrom = arr[ins.from - 1]
+  let count = ins.count
+
+  // go in reverse from on array for count
+  for(let i = count; i > 0; i--) {
+    let x = arrayFrom[arrayFrom.length - 1]
+    arrayTo.push(x)
+    arrayFrom.splice(arrayFrom.length - 1, 1)
+  }
+}
+
+// search for the column guide 
 const findColumnGuide = (strs: string[]) : number => {
   let count = 0
   for(let i = 0; i < strs.length; i++) {
@@ -32,7 +56,7 @@ const findColumnGuide = (strs: string[]) : number => {
   return 0
 }
 
-// will return the last number it finds in the line
+// return the last number it finds in the guide line (ex.. 9 is the amount of arrays we need)
 const findLastNumberInLine = (str: string): number => {
   let count: number = 0
   for(let i = 0; i < str.length; i++) {
@@ -43,52 +67,44 @@ const findLastNumberInLine = (str: string): number => {
   return count
 }
 
-const generateArraysFromGuide = (strs: string[], rowEnd: number, cols: number) : string[][] => {
-  const temp: string[][] = []
-
-  // loop through all strings
-  for(let i = 0; i < rowEnd; i++) {
-    let counter = 1
-    let str: string[] = []
-
-    // loop through each individual char in string
-    for(let c = 0; c < strs[i].length; c++) {
-      
-      // if the counter gets larger then the string reset
-      if(counter >= strs[i].length) {
-        counter = 1
-      }
-
-      // if this char is not an empty string, append it to str and add 4 to counter
-      if(strs[i][counter] != "") {
-        str.push(strs[i][counter])
-        counter += 4
-      }
-    }
-    temp.push(str)
-  }
-  return temp
-} 
-
-const generateArraysFromGuideV2 = (strs: string, startingRow: number, cols: number) : string[][] => {
+// creates a two dimension array from parsing the instructions at the top of the guide
+const generateArraysFromGuide = (strs: string, startingRow: number, cols: number) : string[][] => {
   const arrays: string[][] = []
   let temp: string[] = []
 
   //loop through lengthwise starting at the bottom row
   for(let i = 1; i <= strs[startingRow].length; i += 4) {
     //reverse loop from starting row to 0 adding each element to an array if an element exists
-    for(let j = startingRow; j > 0; j--) {
-      temp.push(strs[j][i])
+    for(let j = startingRow - 1; j >= 0; j--) {
+      if(strs[j][i] != " ") {
+        temp.push(strs[j][i])
+      }
     }
     arrays.push(temp)
     temp = []
   }
-  console.log(arrays)
   return arrays
 }
 
-let r = findColumnGuide(result)
-let s = findLastNumberInLine(result[r])
+let r = findColumnGuide(result) // find the column guide
+let instructionStart = r + 2; // the start of our instructions
+let s = findLastNumberInLine(result[r]) // find the amount of the columns needed
+let arrays = generateArraysFromGuide(result,r,s)  // generate arrays from our guide 
 
 
-generateArraysFromGuideV2(result,r,s)
+//loop through the instructions and process them
+for(let i = instructionStart; i < result.length; i++) {
+  let ins = parseInstruction(result[i])
+  executeInstructionPartOne(arrays, ins)
+}
+
+console.log(`The answer for part one is: `)
+arrays.forEach( arr => {
+  console.log(`${arr[arr.length - 1]}`)
+})
+
+
+
+// part two
+// change the algorithms to retain their position in the array
+// also change the algorithms to ensure that the array is not deleted if it is empty
