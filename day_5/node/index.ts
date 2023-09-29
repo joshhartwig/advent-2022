@@ -32,9 +32,8 @@ const parseInstruction = (str: string) : { count: number, to: number, from: numb
 }
 
 const executeInstructionPartOne = (arr: string[][], ins: { count: number, to: number, from: number }) : void => {
-
-  let arrayTo = arr[ins.to - 1]
-  let arrayFrom = arr[ins.from - 1]
+  const arrayTo = arr[ins.to - 1]
+  const arrayFrom = arr[ins.from - 1]
   let count = ins.count
 
   // go in reverse from on array for count
@@ -43,6 +42,16 @@ const executeInstructionPartOne = (arr: string[][], ins: { count: number, to: nu
     arrayTo.push(x)
     arrayFrom.splice(arrayFrom.length - 1, 1)
   }
+}
+
+const executeInstructionPartTwo = (arr: string[][], ins: { count: number, to: number, from: number}) : void => {
+  const arrayTo = arr[ins.to - 1]
+  const arrayFrom = arr[ins.from - 1]
+  
+  let count = ins.count
+
+  let removedElements = arrayFrom.splice(-count)
+  arrayTo.push(...removedElements)
 }
 
 // search for the column guide 
@@ -98,13 +107,22 @@ for(let i = instructionStart; i < result.length; i++) {
   executeInstructionPartOne(arrays, ins)
 }
 
-console.log(`The answer for part one is: `)
+
+let answer1 = ""
 arrays.forEach( arr => {
-  console.log(`${arr[arr.length - 1]}`)
+  answer1 += arr[arr.length - 1]
 })
+console.log(`The answer for part one: ${answer1}`)
+
+//loop through the instructions and process them
+for(let i = instructionStart; i < result.length; i++) {
+  let ins = parseInstruction(result[i])
+  executeInstructionPartTwo(arrays, ins)
+}
 
 
-
-// part two
-// change the algorithms to retain their position in the array
-// also change the algorithms to ensure that the array is not deleted if it is empty
+let answer2 = ""
+arrays.forEach( arr => {
+  answer2 += arr[arr.length - 1]
+})
+console.log(`The answer for part two: ${answer2}`)
