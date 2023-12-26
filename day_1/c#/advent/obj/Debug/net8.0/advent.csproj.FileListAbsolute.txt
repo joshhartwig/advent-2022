@@ -1,0 +1,15 @@
+/Users/joshuahartwig/Code/repos/advent-2022/day_1/c#/advent/bin/Debug/net8.0/advent
+/Users/joshuahartwig/Code/repos/advent-2022/day_1/c#/advent/bin/Debug/net8.0/advent.deps.json
+/Users/joshuahartwig/Code/repos/advent-2022/day_1/c#/advent/bin/Debug/net8.0/advent.runtimeconfig.json
+/Users/joshuahartwig/Code/repos/advent-2022/day_1/c#/advent/bin/Debug/net8.0/advent.dll
+/Users/joshuahartwig/Code/repos/advent-2022/day_1/c#/advent/bin/Debug/net8.0/advent.pdb
+/Users/joshuahartwig/Code/repos/advent-2022/day_1/c#/advent/obj/Debug/net8.0/advent.GeneratedMSBuildEditorConfig.editorconfig
+/Users/joshuahartwig/Code/repos/advent-2022/day_1/c#/advent/obj/Debug/net8.0/advent.AssemblyInfoInputs.cache
+/Users/joshuahartwig/Code/repos/advent-2022/day_1/c#/advent/obj/Debug/net8.0/advent.AssemblyInfo.cs
+/Users/joshuahartwig/Code/repos/advent-2022/day_1/c#/advent/obj/Debug/net8.0/advent.csproj.CoreCompileInputs.cache
+/Users/joshuahartwig/Code/repos/advent-2022/day_1/c#/advent/obj/Debug/net8.0/advent.sourcelink.json
+/Users/joshuahartwig/Code/repos/advent-2022/day_1/c#/advent/obj/Debug/net8.0/advent.dll
+/Users/joshuahartwig/Code/repos/advent-2022/day_1/c#/advent/obj/Debug/net8.0/refint/advent.dll
+/Users/joshuahartwig/Code/repos/advent-2022/day_1/c#/advent/obj/Debug/net8.0/advent.pdb
+/Users/joshuahartwig/Code/repos/advent-2022/day_1/c#/advent/obj/Debug/net8.0/advent.genruntimeconfig.cache
+/Users/joshuahartwig/Code/repos/advent-2022/day_1/c#/advent/obj/Debug/net8.0/ref/advent.dll
